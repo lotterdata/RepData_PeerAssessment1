@@ -10,7 +10,7 @@ This project reports on a simple analysis of data from a personal activity monit
 
 ## Loading and preprocessing the data  
 
-We begin by loading the dplyr and lubridate packages and reading the data from the zip file. Then force the "date" column to be of type "Date", and create a new column, day.of.week, using the lubridate "wday" function. The resulting values will be 1 for Sunday, 2 for Monday, et cetera.
+We begin by loading the dplyr and lubridate packages and reading the data from the zip file. Then we force the "date" column to be of type "Date", and create a new column, day.of.week, using the lubridate "wday" function. The resulting values will be 1 for Sunday, 2 for Monday, et cetera.
 
 
 ```r
@@ -82,11 +82,11 @@ We also identify the interval with the largest average number of steps, and the 
 
 
 ```r
-x[y==max(y)]
+interval.data$interval[y==max(y)]
 ```
 
 ```
-## [1] 8.583333
+## [1] 835
 ```
 
 ```r
@@ -98,7 +98,10 @@ max(y)
 ```
 
 
-## Imputing missing values
+## Imputing missing values  
+
+Since our analysis will look at activity patterns on different days of the week, we take averages over interval/weekday pairs and use these as our imputed values.
+
 
 ```r
 sum(is.na(mydata$steps))
@@ -144,7 +147,12 @@ median(clean.daily.data$steps,na.rm=TRUE)
 ## [1] 11015
 ```
 
-## Are there differences in activity patterns between weekdays and weekends?
+Our method for imputing values has very little effect on the mean, but it increases the median. In the histogram, it substantially increases the count in the 10000 to 15000 step bucket.
+
+## Are there differences in activity patterns between weekdays and weekends?  
+
+We load the ggplot2 library and add a factor variable the the "clean" data frame that will differentiate weekends from weekdays. This variable is used in the panel plot that displays the different patterns for weekdays and weekends.
+
 
 ```r
 library(ggplot2)
@@ -162,4 +170,6 @@ g +
 ```
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
+
+This plot suggests that on weekends the person's activity started later in the day, but there are more midday spikes, e.g. intervals where the average number of steps taken exceeded 100.
 
