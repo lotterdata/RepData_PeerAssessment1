@@ -71,10 +71,17 @@ max(y)
 
 ## Imputing missing values  
 
-Since our analysis will look at activity patterns on different days of the week, we take averages over interval/weekday pairs and use these as our imputed values.
+First we calculate the number of data points with missing values.
 
 ```{r}
 sum(is.na(mydata$steps))
+```
+
+
+Since our analysis will look at activity patterns on different days of the week, we take averages over interval/weekday pairs and use these as our imputed values.
+
+```{r}
+
 
 impute <- group_by(mydata,interval,day.of.week) %>%
           summarise(steps = mean(steps,na.rm=TRUE))

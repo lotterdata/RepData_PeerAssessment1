@@ -100,7 +100,7 @@ max(y)
 
 ## Imputing missing values  
 
-Since our analysis will look at activity patterns on different days of the week, we take averages over interval/weekday pairs and use these as our imputed values.
+First we calculate the number of data points with missing values.
 
 
 ```r
@@ -110,6 +110,10 @@ sum(is.na(mydata$steps))
 ```
 ## [1] 2304
 ```
+
+
+Since our analysis will look at activity patterns on different days of the week, we take averages over interval/weekday pairs and use these as our imputed values.
+
 
 ```r
 impute <- group_by(mydata,interval,day.of.week) %>%
@@ -129,7 +133,7 @@ hist(clean.daily.data$steps,breaks="Scott",
      main ="Distribution of Steps per Day")
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
 
 ```r
 mean(clean.daily.data$steps,na.rm=TRUE)
@@ -169,7 +173,7 @@ g +
     facet_grid(we~.)
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
 
 This plot suggests that on weekends the person's activity started later in the day, but there are more midday spikes, e.g. intervals where the average number of steps taken exceeded 100.
 
